@@ -132,9 +132,9 @@ driver.close()
 app.use(express.urlencoded());
 app.use(express.json());
 app.use('/',router);
-
-app.listen(8080,function(){
-    console.log("Running")
+const PORT = process.env.PORT || 3000;
+app.listen(PORT,function(){
+    console.log('Running on ${ PORT }');
 }
     );
 
