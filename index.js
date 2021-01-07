@@ -5,7 +5,7 @@ const path = require("path")
 const app = express();
 const  router = express.Router();
 
-const driver = neo4j.driver("neo4j://localhost:7687",neo4j.auth.basic("u7nowaks","297979"));
+const driver = neo4j.driver("neo4j://neo4j.fis.agh.edu.pl:7687",neo4j.auth.basic("u7nowaks","297979"));
 
 
 
@@ -22,12 +22,12 @@ router.post("/movie",async function (req,res) {
 
     let odp = []
     let result = null;
-    result = await session.run('MATCH (h:Hero)-[a:APPEARED_IN]->(m:Movie{Title:"'+movieTitle+'"}) RETURN h')
+    result = await session.run('MATCH (h:u7nowaks_Hero)-[a:u7nowaks_APPEARED_IN]->(m:u7nowaks_Movie{Title:"'+movieTitle+'"}) RETURN h')
         .subscribe(
             {
                 onNext(record) {
                     odp.push(record.get('h')['properties']['Name'])
-                    console.log(odp)
+
                 },
                 onCompleted(summary) {
                     res.send(odp)
@@ -44,12 +44,12 @@ router.post("/race",async function (req,res) {
 
     let odp = []
     let result = null;
-    result = await session.run('MATCH (h:Hero)-[a:RACE]->(m:Race{Name:"'+raceVal+'"}) RETURN h')
+    result = await session.run('MATCH (h:u7nowaks_Hero)-[a:u7nowaks_RACE]->(m:u7nowaks_Race{Name:"'+raceVal+'"}) RETURN h')
         .subscribe(
             {
                 onNext(record) {
                     odp.push(record.get('h')['properties']['Name'])
-                    console.log(odp)
+
                 },
                 onCompleted(summary) {
                     res.send(odp)
@@ -66,12 +66,12 @@ router.post("/superPower",async function (req,res) {
 
     let odp = []
     let result = null;
-    result = await session.run('MATCH (h:Hero)-[a:SUPERPOWER]->(m:SuperPower{Type:"'+superPower+'"}) RETURN h')
+    result = await session.run('MATCH (h:u7nowaks_Hero)-[a:u7nowaks_SUPERPOWER]->(m:u7nowaks_SuperPower{Type:"'+superPower+'"}) RETURN h')
         .subscribe(
             {
                 onNext(record) {
                     odp.push(record.get('h')['properties']['Name'])
-                    console.log(odp)
+
                 },
                 onCompleted(summary) {
                     res.send(odp)
@@ -88,12 +88,12 @@ router.post("/gender",async function (req,res) {
 
     let odp = []
     let result = null;
-    result = await session.run('MATCH (h:Hero)-[a:GENDER]->(m:Gender{Name:"'+genderValue+'"}) RETURN h')
+    result = await session.run('MATCH (h:u7nowaks_Hero)-[a:u7nowaks_GENDER]->(m:u7nowaks_Gender{Name:"'+genderValue+'"}) RETURN h')
         .subscribe(
             {
                 onNext(record) {
                     odp.push(record.get('h')['properties']['Name'])
-                    console.log(odp)
+                    
                 },
                 onCompleted(summary) {
                     res.send(odp)
@@ -109,7 +109,7 @@ router.post("/showAll",async function (req,res) {
 
     let odp = []
     let result = null;
-    result = await session.run('MATCH (h:Hero)-[r]->(p) RETURN h,p')
+    result = await session.run('MATCH (h:u7nowaks_Hero)-[r]->(p) RETURN h,p')
         .subscribe(
             {
                 onNext(record) {
